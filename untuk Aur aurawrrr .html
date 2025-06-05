@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Selamat Ulang Tahun, Aura 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeIn 2s ease;
+      max-width: 600px;
+    }
+    h1 {
+      font-size: 36px;
+      color: #ff6f91;
+    }
+    p {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #333;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .audio-controls {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #ff6f91;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Selamat Ulang Tahun, Aura 🎂</h1>
+    <p>Hari ini lo genap 17 tahun, dan lo tetep jadi sosok yang nggak gampang gue lupain 🌸</p>
+    <p>Gue cuma pengen bilang: semoga lo sehat terus ra, bahagia terus ya, dan hidup lo ga aur auran ✨</p>
+    <p>Makasih karena pernah jadi bagian dari hari-hari gue. Dan... semoga malam ini lo senyum, walau sebentar 💫</p>
+
+    <div class="audio-controls">
+      <button onclick="document.getElementById('bgm').play()">▶️ Putar Musik</button>
+<audio id="bgm" loop>
+  <source src="https://sndup.net/hfw4b/download" type="audio/mpeg">
+  Browser kamu nggak support audio 😢
+</audio>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let pieces = [];
+    const colors = ["#ff6f91", "#fce38a", "#95e1d3", "#6a82fb", "#fc5185"];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createConfetti() {
+      for (let i = 0; i < 150; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 8 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speed: Math.random() * 3 + 1,
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of pieces) {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+        ctx.fill();
+
+        p.y += p.speed;
+        if (p.y > canvas.height) {
+          p.y = 0;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    createConfetti();
+    draw();
+  </script>
+</body>
+</html>
